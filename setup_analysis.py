@@ -1,6 +1,15 @@
 import json
 import csv
 import random
+import setup_analysis
+import numpy as np # matrices, arrays, operators,
+import matplotlib.pyplot as plt # basic visualization took
+import seaborn as sns # visualization
+import pandas as pd # ML, data science
+import collections
+from operator import attrgetter
+from itertools import groupby
+
 
 def set_up_healthcare():
     
@@ -32,7 +41,46 @@ def set_up_healthcare():
             
             hospitalWorkerList.append(myHopsitalWorker)
             
-            print(hospitalWorkerList)
+            # covidList = [HealthcareWorker.covidPositive for HealthcareWorker in hospitalWorkerList]
+        covidList = map(attrgetter('covidPositive'), hospitalWorkerList)
+        
+        data = {}
+
+        # iterating over the list
+        for item in covidList:
+            # checking the element in dictionary
+            if item in data:
+                # incrementing the counr
+                data[item] += 1
+            else:
+                # initializing the count
+                data[item] = 1
+        
+        
+            
+        print("this is covid list " + str(list(covidList)))
+
+        
+        print("this is dataaa" + str(data))
+            
+        responses = list(data.keys())
+        frequencies = list(data.values())
+        
+        # print(courses)
+        # print(values)
+        
+        fig = plt.figure(figsize = (10, 5))
+        
+        # creating the bar plot
+        plt.bar(responses, frequencies, color ='maroon',
+                width = 0.4)
+        
+        plt.xlabel("Response")
+        plt.ylabel("Frequency")
+        plt.title("Covid frequency")
+        plt.show()
+            
+        print(str(hospitalWorkerList))
             
     
 #take out folllowing count
